@@ -190,14 +190,14 @@ void sh_handleFloats(StateHandler* sh, ...) {
     float* v = va_arg(args, float*);
     if(v == NULL) break;
     if(sh->saving) {
-      uint8_t valData[4] = {};
+      uint8_t valData[4] = {0};
       *((float*) valData) = *v;
       uint32_t val = *((uint32_t*) valData);
       for(int i = 0; i < 32; i += 8) sh_writeByte(sh, (val >> i) & 0xff);
     } else {
       uint32_t val = 0;
       for(int i = 0; i < 32; i += 8) val |= sh_readByte(sh) << i;
-      uint8_t valData[4] = {};
+      uint8_t valData[4] = {0};
       *((uint32_t*) valData) = val;
       *v = *((float*) valData);
     }
@@ -212,14 +212,14 @@ void sh_handleDoubles(StateHandler* sh, ...) {
     double* v = va_arg(args, double*);
     if(v == NULL) break;
     if(sh->saving) {
-      uint8_t valData[8] = {};
+      uint8_t valData[8] = {0};
       *((double*) valData) = *v;
       uint64_t val = *((uint64_t*) valData);
       for(int i = 0; i < 64; i += 8) sh_writeByte(sh, (val >> i) & 0xff);
     } else {
       uint64_t val = 0;
       for(int i = 0; i < 64; i += 8) val |= (uint64_t)sh_readByte(sh) << i;
-      uint8_t valData[8] = {};
+      uint8_t valData[8] = {0};
       *((uint64_t*) valData) = val;
       *v = *((double*) valData);
     }
